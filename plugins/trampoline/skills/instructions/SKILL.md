@@ -19,15 +19,15 @@ If the Trampoline connector is available, prefer `get_current_tip` or `get_playb
 
 Practices (the basis is in brackets: docs = Anthropic's documentation, practitioner = a trusted practitioner, judgement = Trampoline's view):
 
-- Settings > Your Claude > Instructions applies to every conversation; Cowork global instructions are merged into it, so review the merged text. *(docs)*
-- Include preferred methods, terms you use often, typical scenarios and communication preferences. *(docs)*
-- Only what should hold in every conversation; task procedures go in skills, context for one area in a project. *(docs)*
-- Give the reason behind each rule; Claude generalises better from why than from bare rules. *(docs)*
-- Say what to do rather than what to avoid. *(docs)*
-- Colleague test: would a smart new colleague understand it without asking? *(docs)*
-- Include role, audience, output format and how to handle uncertainty. *(docs)*
-- For several languages: reply-language rule, register per language (tú or usted, je or u), spelling variant and punctuation. *(judgement)*
-- Roughly 150 to 400 words under short headings; there is no official length guidance. *(judgement)*
+1. Settings > Your Claude > Instructions applies to every conversation; Cowork global instructions are merged into it, so review the merged text. *(docs)*
+2. Include preferred methods, terms you use often, typical scenarios and communication preferences. *(docs)*
+3. Only what should hold in every conversation; task procedures go in skills, context for one area in a project. *(docs)*
+4. Give the reason behind each rule; Claude generalises better from why than from bare rules. *(docs)*
+5. Say what to do rather than what to avoid. *(docs)*
+6. Colleague test: would a smart new colleague understand it without asking? *(docs)*
+7. Include role, audience, output format and how to handle uncertainty. *(docs)*
+8. For several languages: reply-language rule, register per language (tú or usted, je or u), spelling variant and punctuation. *(judgement)*
+9. Roughly 150 to 400 words under short headings; there is no official length guidance. *(judgement)*
 
 Mistakes to avoid:
 

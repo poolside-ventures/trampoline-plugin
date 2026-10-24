@@ -19,16 +19,16 @@ If the Trampoline connector is available, prefer `get_current_tip` or `get_playb
 
 Practices (the basis is in brackets: docs = Anthropic's documentation, practitioner = a trusted practitioner, judgement = Trampoline's view):
 
-- Worth building when a task repeats, should be done the same way, and gets the same corrections: a report format, a checklist, a multi-step procedure. *(docs)*
-- Not for one-off tasks, live data (use connectors), or rules every chat needs (use instructions). *(docs)*
-- Write the task and what good looks like in one sentence; that becomes the description. *(docs)*
-- The description is all Claude reads before loading a skill; use the words real requests use and make it slightly pushy. *(docs)*
-- Keep the description under 200 characters to be safe; the sources disagree (200 or 1,024). *(judgement)*
-- Keep SKILL.md under 500 lines; move long material to reference files and say when to read each. *(docs)*
-- Show example inputs and outputs, add gotchas, give one default, explain why. *(docs)*
-- Do the task once with Claude, then turn the steps and corrections into the skill. *(docs)*
-- Test with prompts that should and should not trigger it; skill-creator compares runs with and without the skill. *(docs)*
-- Start by asking Claude to use skill-creator. *(docs)*
+1. Worth building when a task repeats, should be done the same way, and gets the same corrections: a report format, a checklist, a multi-step procedure. *(docs)*
+2. Not for one-off tasks, live data (use connectors), or rules every chat needs (use instructions). *(docs)*
+3. Write the task and what good looks like in one sentence; that becomes the description. *(docs)*
+4. The description is all Claude reads before loading a skill; use the words real requests use and make it slightly pushy. *(docs)*
+5. Keep the description under 200 characters to be safe; the sources disagree (200 or 1,024). *(judgement)*
+6. Keep SKILL.md under 500 lines; move long material to reference files and say when to read each. *(docs)*
+7. Show example inputs and outputs, add gotchas, give one default, explain why. *(docs)*
+8. Do the task once with Claude, then turn the steps and corrections into the skill. *(docs)*
+9. Test with prompts that should and should not trigger it; skill-creator compares runs with and without the skill. *(docs)*
+10. Start by asking Claude to use skill-creator. *(docs)*
 
 Mistakes to avoid:
 

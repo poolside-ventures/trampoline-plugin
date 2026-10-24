@@ -19,14 +19,14 @@ If the Trampoline connector is available, prefer `get_current_tip` or `get_playb
 
 Practices (the basis is in brackets: docs = Anthropic's documentation, practitioner = a trusted practitioner, judgement = Trampoline's view):
 
-- Memory is saved as separate topics; review it in Settings > Your Claude > Your memory > Manage, and edit or delete topics. *(docs)*
-- Tell Claude directly what to remember, change or forget; changes apply from the next conversation. *(docs)*
-- After a change, ask "I updated my memory. What did you learn about me?" *(docs)*
-- Use projects to keep areas of work apart; each has its own memory, and account memory can be turned off per project. *(docs)*
-- Use incognito, or switch memory off for one chat, for sensitive one-offs. *(docs)*
-- Back it up by asking Claude to write out its memories of you exactly as stored. *(docs)*
-- Memory is shared with Cowork only when Cowork runs in the cloud. *(docs)*
-- Review monthly and remove stale topics. *(judgement)*
+1. Memory is saved as separate topics; review it in Settings > Your Claude > Your memory > Manage, and edit or delete topics. *(docs)*
+2. Tell Claude directly what to remember, change or forget; changes apply from the next conversation. *(docs)*
+3. After a change, ask "I updated my memory. What did you learn about me?" *(docs)*
+4. Use projects to keep areas of work apart; each has its own memory, and account memory can be turned off per project. *(docs)*
+5. Use incognito, or switch memory off for one chat, for sensitive one-offs. *(docs)*
+6. Back it up by asking Claude to write out its memories of you exactly as stored. *(docs)*
+7. Memory is shared with Cowork only when Cowork runs in the cloud. *(docs)*
+8. Review monthly and remove stale topics. *(judgement)*
 
 Mistakes to avoid:
 

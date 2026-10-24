@@ -19,14 +19,14 @@ If the Trampoline connector is available, prefer `get_current_tip` or `get_playb
 
 Practices (the basis is in brackets: docs = Anthropic's documentation, practitioner = a trusted practitioner, judgement = Trampoline's view):
 
-- Styles are moving to skills: custom styles migrate into skills that start switched off; turn them on in Customize > Skills and call them as /name-style. Concise, Explanatory and Formal are removed. *(docs)*
-- A voice that applies everywhere goes in Instructions for Claude. *(docs)*
-- A voice for particular kinds of writing (LinkedIn posts, investor updates) becomes a skill with a one-sentence description and rules. *(docs)*
-- Add 3 to 5 real writing samples in a references folder and say when to read them. *(docs)*
-- Build it from real material and the corrections made in a real session, not generic advice. *(docs)*
-- Keep a gotchas list: phrases they never use and AI habits they keep correcting. *(docs)*
-- One reference file per language and register, with a note on when to load which. *(judgement)*
-- Improve the skill each time they edit a draft; an Anthropic BDR needed hundreds of rounds before drafts sounded like him. *(docs)*
+1. Styles are moving to skills: custom styles migrate into skills that start switched off; turn them on in Customize > Skills and call them as /name-style. Concise, Explanatory and Formal are removed. *(docs)*
+2. A voice that applies everywhere goes in Instructions for Claude. *(docs)*
+3. A voice for particular kinds of writing (LinkedIn posts, investor updates) becomes a skill with a one-sentence description and rules. *(docs)*
+4. Add 3 to 5 real writing samples in a references folder and say when to read them. *(docs)*
+5. Build it from real material and the corrections made in a real session, not generic advice. *(docs)*
+6. Keep a gotchas list: phrases they never use and AI habits they keep correcting. *(docs)*
+7. One reference file per language and register, with a note on when to load which. *(judgement)*
+8. Improve the skill each time they edit a draft; an Anthropic BDR needed hundreds of rounds before drafts sounded like him. *(docs)*
 
 Mistakes to avoid:
 
@@ -43,6 +43,7 @@ At the end, call `report_outcome` if this was a Trampoline tip, then `log_intera
 When this skill loads because a task matches, and the person did not ask for Chippy:
 
 - Do the task exactly as asked. The tip never replaces or delays the work.
-- After the answer, add one line, at most 25 words: `Tip from Chippy: ...`, with the one practice above that would most help with what they just did, and why.
-- Only if it clearly fits. Skip it if you already gave a Chippy tip in this conversation, if the person already does this, or if they asked for no tips.
-- Don't call any tool and don't send anything for this tip.
+- After the answer, pick the one practice above that would most help with what they just did. Only if it clearly fits: skip it if you already gave a Chippy tip in this conversation, if the person already does this, or if they asked for no tips.
+- If the Trampoline connector is available, call `log_tip_shown` with playbook_id `writing_voice` and the practice's number in the list above (1 = the first). Send nothing else. If it says not to show the tip, leave it out.
+- Add one line, at most 25 words: `Tip from Chippy: ...`, with that practice and why it helps here.
+- If the person then reacts to the tip in this conversation, call `log_tip_reaction` with the id from `log_tip_shown`: `tried` (they used it), `asked_more` (they asked about it), `not_useful` (they said it didn't help) or `no_more_tips` (they don't want these tips). No reaction: call nothing.

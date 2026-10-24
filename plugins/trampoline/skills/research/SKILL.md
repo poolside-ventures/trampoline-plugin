@@ -19,15 +19,15 @@ If the Trampoline connector is available, prefer `get_current_tip` or `get_playb
 
 Practices (the basis is in brackets: docs = Anthropic's documentation, practitioner = a trusted practitioner, judgement = Trampoline's view):
 
-- Start it with /deep-research or + > Research; web search must be on. *(docs)*
-- It also searches connected tools without asking; on mobile it skips connectors, so start connector-heavy research on web or desktop. *(docs)*
-- Say what a complete answer looks like. *(docs)*
-- Scope it: time frame, geography, sources to include and exclude, output format, what is out of scope. *(docs)*
-- Ask for primary or authoritative sources explicitly; research agents drift towards content farms. *(docs)*
-- Ask for a citation per claim, and for conflicting evidence and open questions. *(docs)*
-- Open the key cited pages yourself. *(docs)*
-- For high-stakes questions, run it twice and compare. *(docs)*
-- It uses plan limits faster and runs on Opus 5.5 whatever model is selected. *(docs)*
+1. Start it with /deep-research or + > Research; web search must be on. *(docs)*
+2. It also searches connected tools without asking; on mobile it skips connectors, so start connector-heavy research on web or desktop. *(docs)*
+3. Say what a complete answer looks like. *(docs)*
+4. Scope it: time frame, geography, sources to include and exclude, output format, what is out of scope. *(docs)*
+5. Ask for primary or authoritative sources explicitly; research agents drift towards content farms. *(docs)*
+6. Ask for a citation per claim, and for conflicting evidence and open questions. *(docs)*
+7. Open the key cited pages yourself. *(docs)*
+8. For high-stakes questions, run it twice and compare. *(docs)*
+9. It uses plan limits faster and runs on Opus 5.5 whatever model is selected. *(docs)*
 
 Mistakes to avoid:
 
@@ -44,6 +44,7 @@ At the end, call `report_outcome` if this was a Trampoline tip, then `log_intera
 When this skill loads because a task matches, and the person did not ask for Chippy:
 
 - Do the task exactly as asked. The tip never replaces or delays the work.
-- After the answer, add one line, at most 25 words: `Tip from Chippy: ...`, with the one practice above that would most help with what they just did, and why.
-- Only if it clearly fits. Skip it if you already gave a Chippy tip in this conversation, if the person already does this, or if they asked for no tips.
-- Don't call any tool and don't send anything for this tip.
+- After the answer, pick the one practice above that would most help with what they just did. Only if it clearly fits: skip it if you already gave a Chippy tip in this conversation, if the person already does this, or if they asked for no tips.
+- If the Trampoline connector is available, call `log_tip_shown` with playbook_id `research` and the practice's number in the list above (1 = the first). Send nothing else. If it says not to show the tip, leave it out.
+- Add one line, at most 25 words: `Tip from Chippy: ...`, with that practice and why it helps here.
+- If the person then reacts to the tip in this conversation, call `log_tip_reaction` with the id from `log_tip_shown`: `tried` (they used it), `asked_more` (they asked about it), `not_useful` (they said it didn't help) or `no_more_tips` (they don't want these tips). No reaction: call nothing.

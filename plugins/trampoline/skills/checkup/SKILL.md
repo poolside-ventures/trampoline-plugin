@@ -1,9 +1,9 @@
 ---
 name: checkup
-description: "Chippy's setup checkup for Trampoline. Use when the person says \"Chippy, check my setup\", asks for a Trampoline or Chippy checkup, or a scheduled task runs it. Claude inspects its own setup (instructions, memory, connectors, skills, project, recent activity), reports it as counts and yes/no answers, never content, and sends it to the Trampoline connector for a scorecard and tips."
+description: "Chippy's setup checkup for Trampoline. Use when the person says \"Chippy, check my setup\", asks for a Trampoline or Chippy checkup, or a scheduled task runs it. Claude inspects its own setup (instructions, memory, connectors, skills, project, recent activity) and scores how the person's recent prompts follow best practice, reports it as counts, scores and yes/no answers, never content, and sends it to the Trampoline connector for a scorecard and tips."
 ---
 
-# Chippy checkup (v0.8)
+# Chippy checkup (v0.9)
 
 You are running a setup checkup for Chippy, Trampoline's AI assistant. The goal is to learn what you can detect about this person's Claude setup and use **from inside this conversation, without asking them anything**. Report only facts: yes/no answers, counts, dates, names of tools or skills, and short generic task labels. Never quote or summarise the content of their instructions, memory, files or chats, and never include names of people, clients or companies.
 
@@ -49,7 +49,14 @@ Do not ask the person questions. If you cannot see something, say "cannot see" r
      - **weak:** only the topic overlaps (for example a calendar connector for planning event formats). List weak matches only if there is nothing better, and never more than one.
    - Give the reason in 15 words or fewer, taken from the description or tool names.
    - Do not call any connector's own tools.
-10. **Limits.** List what you could not determine and why (for example "cannot see projects other than the current one").
+10. **Prompt practices.** How the person asks, scored against Trampoline's best practices. Only scores are sent, never the prompts.
+   - If past-chat search is switched off or not offered, skip this step and set `reason_if_none` to `past_chat_search_off`. That is a setup gap: the scorecard will say so.
+   - Call the Trampoline connector's `get_prompt_practices` tool for the current practices, scale and how to assess. If the connector is not available, skip this step (`reason_if_none`: `other`).
+   - With the past-chat tool, look at chats from the last 7 days. Pick up to 10 of the person's own messages that ask Claude to do something, from different chats where you can: opening requests, and follow-ups that react to an answer. Skip greetings, one-word replies and text Claude drafted for them.
+   - If the results show only summaries or titles and not the person's own words, don't guess: set `reason_if_none` to `only_summaries_visible`.
+   - Score each message on every practice: 0, 1, 2, or null when it does not apply, using the level descriptions. Reason briefly before each score. A short prompt can score 2; length is not quality.
+   - In the report, give each scored message its date and task kind (same labels as the task mix) and the scores. Nothing else: no text, titles or topics.
+11. **Limits.** List what you could not determine and why (for example "cannot see projects other than the current one").
 
 ## The report
 
@@ -57,7 +64,7 @@ Build exactly one JSON object:
 
 ```json
 {
-  "chippy_checkup_version": "0.8",
+  "chippy_checkup_version": "0.9",
   "date": "YYYY-MM-DD",
   "surface": {"value": "", "confidence": "seen|inferred|cannot see"},
   "context": {"instructions_present": null, "instructions_length": "none|short|medium|long", "instructions_location": "separate|in_memory|cannot see", "style_applied": null, "confidence": ""},
@@ -75,6 +82,8 @@ Build exactly one JSON object:
     "features_used": {"research": null, "artifacts": null, "code_or_files": null, "web_search": null},
     "past_chat_reason_if_missing": "", "confidence": ""
   },
+  "prompts": {"chats_looked_at": null, "assessed": null, "reason_if_none": null,
+    "items": [{"date": "YYYY-MM-DD", "kind": "writing", "scores": {"clear_task": 2, "context_and_purpose": 1, "output_and_constraints": null}}]},
   "cannot_determine": []
 }
 ```
@@ -82,9 +91,9 @@ Build exactly one JSON object:
 ## Sending it
 
 1. Say one short sentence: "Chippy checkup done; here is what I could detect about your setup." Then show the JSON, so the person sees exactly what will be sent.
-2. Check it once more for anything that is not a count, date, yes/no, tool or skill name or generic label. Remove names of people, clients, companies or products, and quotes.
+2. Check it once more for anything that is not a count, score, date, yes/no, tool or skill name or generic label. Remove names of people, clients, companies or products, and quotes.
 3. Call the Trampoline connector's `submit_checkup` tool with the report. Use `trigger: "scheduled"` when this runs as a scheduled task, otherwise `"on_demand"`. If the person is in the conversation and asks you not to send it, don't.
-4. Chippy's card shows the scorecard and tips. In a few lines, point out the most useful gap or tip and offer to work on it now (then follow the `work-on-tip` skill).
+4. Chippy's card shows the scorecard and tips. In a few lines, point out the most useful gap or tip and offer to work on it now (then follow the `work-on-tip` skill). If prompt practices were scored, name the practice with the most room to grow in one sentence, with what good looks like.
 5. If the Trampoline connector is not available, say so and point the person to https://trampoline.tech/setup. Do not send the report anywhere else.
 
 ## Chippy's summary
