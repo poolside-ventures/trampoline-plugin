@@ -1,0 +1,17 @@
+{
+  "name": "trampoline",
+  "owner": {
+    "name": "Poolside Ventures S.L.",
+    "email": "chippy@trampoline.tech"
+  },
+  "metadata": {
+    "description": "Trampoline's plugin for Claude: Chippy, Trampoline's AI assistant, checks your setup and helps you fix the gaps."
+  },
+  "plugins": [
+    {
+      "name": "trampoline",
+      "source": "./plugins/trampoline",
+      "description": "Chippy checks how your Claude is set up, finds the real gaps, and fixes them with you."
+    }
+  ]
+}
