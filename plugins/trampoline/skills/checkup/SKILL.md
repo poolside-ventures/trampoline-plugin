@@ -3,7 +3,7 @@ name: checkup
 description: "Chippy's setup checkup for Trampoline. Use when the person says \"Chippy, check my setup\", asks for a Trampoline or Chippy checkup, or a scheduled task runs it. Claude inspects its own setup (instructions, memory, connectors, skills, project, recent activity) and scores how the person's recent prompts follow best practice, reports it as counts, scores and yes/no answers, never content, and sends it to the Trampoline connector for a scorecard and tips."
 ---
 
-# Chippy checkup (v0.11)
+# Chippy checkup (v0.12)
 
 You are running a setup checkup for Chippy, Trampoline's AI assistant. The goal is to learn what you can detect about this person's Claude setup and use **from inside this conversation, without asking them anything**. Report only facts: yes/no answers, counts, dates, names of tools or skills, and short generic task labels. Never quote or summarise the content of their instructions, memory, files or chats, and never include names of people, clients or companies.
 
@@ -11,7 +11,7 @@ Do not ask the person questions, and work quietly: don't call tools that show ca
 
 ## Steps
 
-1. **Surface.** Which surface are you running in, as far as you can tell: claude.ai chat, a claude.ai project, Cowork, a Cowork scheduled task, Claude Code, Claude in Chrome, Claude for Microsoft 365, Slack, other.
+1. **Surface.** Which surface are you running in, as far as you can tell: claude.ai chat, a claude.ai project, Cowork, a Cowork scheduled task, Claude Code, Claude in Chrome, Claude for Microsoft 365, Slack, other. Answer with just the name.
 2. **Context.** Are there account-level instructions from the person ("Instructions for Claude" or user preferences) in your context? Rough length: none, short (under 50 words), medium, long (over 300 words). Say where you found them: a separate instructions block, or inside memory. Is a writing style applied?
 3. **Memory.**
    - Is any memory about this person present in your context, or do you have memory tools?
@@ -64,7 +64,7 @@ Build exactly one JSON object. It is only for the `submit_checkup` tool: never s
 
 ```json
 {
-  "chippy_checkup_version": "0.11",
+  "chippy_checkup_version": "0.12",
   "date": "YYYY-MM-DD",
   "surface": {"value": "", "confidence": "seen|inferred|cannot see"},
   "context": {"instructions_present": null, "instructions_length": "none|short|medium|long", "instructions_location": "separate|in_memory|cannot see", "style_applied": null, "confidence": ""},
@@ -95,6 +95,6 @@ The people using Chippy don't work with code. Speak plainly and keep it short: n
 1. Check the report once more for anything that is not a count, score, date, yes/no, tool or skill name or generic label. Remove names of people, clients, companies or products, and quotes.
 2. In two or three plain sentences, say what you are sending, for example: "I've looked at your setup. I'm sending Trampoline only counts and yes/no answers, like that memory is on with 28 items, 3 apps aren't connected yet, and you used Claude on 19 days this month. Never your chats or files."
 3. Then call the Trampoline connector's `submit_checkup` tool with the report straight away; don't ask for permission first (connecting Trampoline was the permission). Use `trigger: "scheduled"` when this runs as a scheduled task, otherwise `"on_demand"`. If the person asks you not to send it, don't.
-4. Chippy's card shows the scorecard and tips. In a few plain lines, point out the most useful gap or tip and offer to work on it now (then follow the `work-on-tip` skill). If prompt practices were scored, name the practice with the most room to grow in one sentence, with what good looks like.
+4. Chippy's card shows the scorecard and the top three tips, so don't repeat them. The people using Chippy are busy: in two or three short sentences, name the one tip to start with and what it gets them, then offer to work on it now (then follow the `work-on-tip` skill). Leave out the other tips, scores and housekeeping unless the person asks. If they want more, show their other tips (the `show-tips` skill).
 5. If the Trampoline connector is not available, say so and point the person to https://trampoline.tech/setup. Do not send the report anywhere else.
 
