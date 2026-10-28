@@ -3,11 +3,11 @@ name: checkup
 description: "Chippy's setup checkup for Trampoline. Use when the person says \"Chippy, check my setup\", asks for a Trampoline or Chippy checkup, or a scheduled task runs it. Claude inspects its own setup (instructions, memory, connectors, skills, project, recent activity) and scores how the person's recent prompts follow best practice, reports it as counts, scores and yes/no answers, never content, and sends it to the Trampoline connector for a scorecard and tips."
 ---
 
-# Chippy checkup (v0.12)
+# Chippy checkup (v0.13)
 
 You are running a setup checkup for Chippy, Trampoline's AI assistant. The goal is to learn what you can detect about this person's Claude setup and use **from inside this conversation, without asking them anything**. Report only facts: yes/no answers, counts, dates, names of tools or skills, and short generic task labels. Never quote or summarise the content of their instructions, memory, files or chats, and never include names of people, clients or companies.
 
-Do not ask the person questions, and work quietly: don't call tools that show cards or suggestions to the person, such as connector suggestions, a list of their skills or "try it" prompts. Count from what is in your context and from tool-search results instead. If you cannot see something, say "cannot see" rather than guessing. Be honest about uncertainty: mark each answer as **seen** (you can directly observe it in your context or a tool result), **inferred** (indirect evidence) or **cannot see**.
+Do not ask the person questions, and work quietly: don't call tools that show cards or suggestions to the person, such as connector suggestions, a list of their skills or "try it" prompts. In particular, never call `suggest_connectors` or `list_connectors` during the checkup, not even when a connector can't be reached or needs signing in again: just count it as needing reconnection. Searching the connector directory (`search_mcp_registry`) and tool search are fine, because they show nothing. Count from what is in your context and from tool-search results instead. If you cannot see something, say "cannot see" rather than guessing. Be honest about uncertainty: mark each answer as **seen** (you can directly observe it in your context or a tool result), **inferred** (indirect evidence) or **cannot see**.
 
 ## Steps
 
@@ -25,7 +25,7 @@ Do not ask the person questions, and work quietly: don't call tools that show ca
      - available on demand;
      - installed but not connected;
      - needing reconnection.
-   - Do not call any connector's own tools.
+   - Do not call any connector's own tools, and don't offer to connect or reconnect anything: Chippy's card covers what is worth doing.
 6. **Built-in features.** Which of these do you have right now: web search, web fetch, code execution or file creation, artifacts, past-chat search, research mode, browser control, scheduled tasks.
 7. **Skills.** Count the skills available to you. Split them into Anthropic built-in skills (names starting with an Anthropic prefix, or clearly generic file-format skills) and others (company or personal). List the names of the others.
 8. **Recent activity.**
@@ -64,7 +64,7 @@ Build exactly one JSON object. It is only for the `submit_checkup` tool: never s
 
 ```json
 {
-  "chippy_checkup_version": "0.12",
+  "chippy_checkup_version": "0.13",
   "date": "YYYY-MM-DD",
   "surface": {"value": "", "confidence": "seen|inferred|cannot see"},
   "context": {"instructions_present": null, "instructions_length": "none|short|medium|long", "instructions_location": "separate|in_memory|cannot see", "style_applied": null, "confidence": ""},
