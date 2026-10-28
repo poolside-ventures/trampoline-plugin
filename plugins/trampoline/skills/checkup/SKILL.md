@@ -96,6 +96,3 @@ Build exactly one JSON object:
 4. Chippy's card shows the scorecard and tips. In a few lines, point out the most useful gap or tip and offer to work on it now (then follow the `work-on-tip` skill). If prompt practices were scored, name the practice with the most room to grow in one sentence, with what good looks like.
 5. If the Trampoline connector is not available, say so and point the person to https://trampoline.tech/setup. Do not send the report anywhere else.
 
-## Chippy's summary
-
-At the end, call `log_interaction` with a summary of the Chippy part only: what was asked ("setup checkup"), what Chippy suggested, what was done, the outcome and any feedback. Nothing from the rest of the conversation, no names, no quotes.

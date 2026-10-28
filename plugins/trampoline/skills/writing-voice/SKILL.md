@@ -1,6 +1,6 @@
 ---
 name: writing-voice
-description: "Trampoline playbook \"writing voice\": The person wants Claude to write like them (posts, updates, emails), or used Styles, which are being replaced by skills. Use when the person works on this with Chippy or asks for help with it. Also use when the person asks Claude to draft or rewrite something in their own voice or for their own audience (emails, posts, proposals), to end the draft with one short tip from Chippy on keeping Claude in their voice."
+description: "Trampoline playbook \"writing voice\": The person wants Claude to write like them (posts, updates, emails), or used Styles, which are being replaced by skills. Use when the person works on this with Chippy or asks for help with it."
 ---
 
 # Writing voice (Trampoline playbook 0.2)
@@ -35,15 +35,3 @@ Mistakes to avoid:
 - One sample in one language used as the model for every language. *(judgement)*
 
 Example: name: my-voice-linkedin description: Write or rewrite LinkedIn posts and short founder updates in my voice. Use whenever I ask for a post, a hook, or to make something sound like me, even if I do not say LinkedIn. Read references/samples-en.md or samples-es.md, matching the target language.
-
-At the end, call `report_outcome` if this was a Trampoline tip, then `log_interaction` with a summary of the Chippy part only: what was asked, suggested and done, the outcome and any feedback. No names of people, clients or companies, no quotes, nothing from the rest of the conversation.
-
-## Tip from Chippy (while the person works)
-
-When this skill loads because a task matches, and the person did not ask for Chippy:
-
-- Do the task exactly as asked. The tip never replaces or delays the work.
-- After the answer, pick the one practice above that would most help with what they just did. Only if it clearly fits: skip it if you already gave a Chippy tip in this conversation, if the person already does this, or if they asked for no tips.
-- If the Trampoline connector is available, call `log_tip_shown` with playbook_id `writing_voice` and the practice's number in the list above (1 = the first). Send nothing else. If it says not to show the tip, leave it out.
-- Add one line, at most 25 words: `Tip from Chippy: ...`, with that practice and why it helps here.
-- If the person then reacts to the tip in this conversation, call `log_tip_reaction` with the id from `log_tip_shown`: `tried` (they used it), `asked_more` (they asked about it), `not_useful` (they said it didn't help) or `no_more_tips` (they don't want these tips). No reaction: call nothing.

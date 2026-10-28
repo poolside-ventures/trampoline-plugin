@@ -1,6 +1,6 @@
 ---
 name: research
-description: "Trampoline playbook \"research\": Questions that need several sources: legal or regulatory checks, market and competitor research, naming and availability. Use when the person works on this with Chippy or asks for help with it. Also use when the person asks a question that needs several sources (legal or regulatory checks, market or competitor research, naming and availability), to end the answer with one short tip from Chippy on getting better research."
+description: "Trampoline playbook \"research\": Questions that need several sources: legal or regulatory checks, market and competitor research, naming and availability. Use when the person works on this with Chippy or asks for help with it."
 ---
 
 # Research (Trampoline playbook 0.2)
@@ -36,15 +36,3 @@ Mistakes to avoid:
 - Using Research for a simple fact web search answers, wasting limits. *(docs)*
 
 Example: Research the current EU rules for labelling alcohol-free wine sold online in Spain and Germany. Scope: EU regulations and official national guidance in force as of October 2026; exclude blogs unless they cite the regulation. Output: a table (requirement, legal source with article number, country differences), then open questions. Cite every claim; if sources conflict, show both; say "not found" rather than guessing.
-
-At the end, call `report_outcome` if this was a Trampoline tip, then `log_interaction` with a summary of the Chippy part only: what was asked, suggested and done, the outcome and any feedback. No names of people, clients or companies, no quotes, nothing from the rest of the conversation.
-
-## Tip from Chippy (while the person works)
-
-When this skill loads because a task matches, and the person did not ask for Chippy:
-
-- Do the task exactly as asked. The tip never replaces or delays the work.
-- After the answer, pick the one practice above that would most help with what they just did. Only if it clearly fits: skip it if you already gave a Chippy tip in this conversation, if the person already does this, or if they asked for no tips.
-- If the Trampoline connector is available, call `log_tip_shown` with playbook_id `research` and the practice's number in the list above (1 = the first). Send nothing else. If it says not to show the tip, leave it out.
-- Add one line, at most 25 words: `Tip from Chippy: ...`, with that practice and why it helps here.
-- If the person then reacts to the tip in this conversation, call `log_tip_reaction` with the id from `log_tip_shown`: `tried` (they used it), `asked_more` (they asked about it), `not_useful` (they said it didn't help) or `no_more_tips` (they don't want these tips). No reaction: call nothing.

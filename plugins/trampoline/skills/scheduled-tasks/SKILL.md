@@ -1,6 +1,6 @@
 ---
 name: scheduled-tasks
-description: "Trampoline playbook \"scheduled tasks\": Something the person does every day, week or month: a briefing, a report, a check, recurring research. Use when the person works on this with Chippy or asks for help with it. Also use when the person asks for something they clearly do on a regular schedule (a weekly report, a daily digest, a monthly check), to end the answer with one short tip from Chippy on scheduling it."
+description: "Trampoline playbook \"scheduled tasks\": Something the person does every day, week or month: a briefing, a report, a check, recurring research. Use when the person works on this with Chippy or asks for help with it."
 ---
 
 # Scheduled tasks (Trampoline playbook 0.2)
@@ -36,15 +36,3 @@ Mistakes to avoid:
 - Referencing local files in a task that runs in the cloud. *(docs)*
 
 Example: Every weekday at 08:00 Europe/Madrid, review my Gmail and Google Calendar for the last 24 hours and today. Produce a briefing: meetings today with one line of prep each, emails needing a reply sorted by urgency with a draft for the top three (do not send), and anything from investors or legal at the top. Max 300 words. If a connector is unavailable, say so.
-
-At the end, call `report_outcome` if this was a Trampoline tip, then `log_interaction` with a summary of the Chippy part only: what was asked, suggested and done, the outcome and any feedback. No names of people, clients or companies, no quotes, nothing from the rest of the conversation.
-
-## Tip from Chippy (while the person works)
-
-When this skill loads because a task matches, and the person did not ask for Chippy:
-
-- Do the task exactly as asked. The tip never replaces or delays the work.
-- After the answer, pick the one practice above that would most help with what they just did. Only if it clearly fits: skip it if you already gave a Chippy tip in this conversation, if the person already does this, or if they asked for no tips.
-- If the Trampoline connector is available, call `log_tip_shown` with playbook_id `scheduled_tasks` and the practice's number in the list above (1 = the first). Send nothing else. If it says not to show the tip, leave it out.
-- Add one line, at most 25 words: `Tip from Chippy: ...`, with that practice and why it helps here.
-- If the person then reacts to the tip in this conversation, call `log_tip_reaction` with the id from `log_tip_shown`: `tried` (they used it), `asked_more` (they asked about it), `not_useful` (they said it didn't help) or `no_more_tips` (they don't want these tips). No reaction: call nothing.

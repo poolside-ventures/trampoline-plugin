@@ -35,5 +35,3 @@ Mistakes to avoid:
 - On Team or Enterprise, assuming memory is on: the admin enables it and each member opts in. *(docs)*
 
 Example: Remember that this quarter my priority is closing sponsors for the November event. Forget the old workshop price; the new one is in the project files. Then tell me what you now remember about my priorities.
-
-At the end, call `report_outcome` if this was a Trampoline tip, then `log_interaction` with a summary of the Chippy part only: what was asked, suggested and done, the outcome and any feedback. No names of people, clients or companies, no quotes, nothing from the rest of the conversation.

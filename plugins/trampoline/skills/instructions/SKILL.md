@@ -36,5 +36,3 @@ Mistakes to avoid:
 - Only prohibitions in capitals, with no reasons. *(docs)*
 
 Example: About me: Founder and operator. I run several small companies and handle sales myself. Languages: Reply in the language I write in. English uses British spelling. Spanish: tú with peers, usted with officials. Dutch: je unless I say otherwise. Style: Lead with the answer, then the reasoning. Short paragraphs. No em dashes; use commas or parentheses. I paste drafts straight into email, so avoid heavy formatting in drafts. Accuracy: For prices, product specs and legal questions, search the web and cite sources, and say when you answer from memory, because I act on this. When unsure: say what you assumed at the end.
-
-At the end, call `report_outcome` if this was a Trampoline tip, then `log_interaction` with a summary of the Chippy part only: what was asked, suggested and done, the outcome and any feedback. No names of people, clients or companies, no quotes, nothing from the rest of the conversation.

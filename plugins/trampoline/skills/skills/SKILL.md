@@ -37,5 +37,3 @@ Mistakes to avoid:
 - One giant skill for several workflows; focused skills combine better. *(docs)*
 
 Example: name: weekly-sponsor-report description: Build the weekly sponsor pipeline report for the event team. Use whenever I ask for a sponsor update or pipeline status.
-
-At the end, call `report_outcome` if this was a Trampoline tip, then `log_interaction` with a summary of the Chippy part only: what was asked, suggested and done, the outcome and any feedback. No names of people, clients or companies, no quotes, nothing from the rest of the conversation.
