@@ -3,11 +3,11 @@ name: checkup
 description: "Chippy's setup checkup for Trampoline. Use when the person says \"Chippy, check my setup\", asks for a Trampoline or Chippy checkup, or a scheduled task runs it. Claude inspects its own setup (instructions, memory, connectors, skills, project, recent activity) and scores how the person's recent prompts follow best practice, reports it as counts, scores and yes/no answers, never content, and sends it to the Trampoline connector for a scorecard and tips."
 ---
 
-# Chippy checkup (v0.9)
+# Chippy checkup (v0.10)
 
 You are running a setup checkup for Chippy, Trampoline's AI assistant. The goal is to learn what you can detect about this person's Claude setup and use **from inside this conversation, without asking them anything**. Report only facts: yes/no answers, counts, dates, names of tools or skills, and short generic task labels. Never quote or summarise the content of their instructions, memory, files or chats, and never include names of people, clients or companies.
 
-Do not ask the person questions. If you cannot see something, say "cannot see" rather than guessing. Be honest about uncertainty: mark each answer as **seen** (you can directly observe it in your context or a tool result), **inferred** (indirect evidence) or **cannot see**.
+Do not ask the person questions, and work quietly: don't call tools that show cards or suggestions to the person, such as connector suggestions, a list of their skills or "try it" prompts. Count from what is in your context and from tool-search results instead. If you cannot see something, say "cannot see" rather than guessing. Be honest about uncertainty: mark each answer as **seen** (you can directly observe it in your context or a tool result), **inferred** (indirect evidence) or **cannot see**.
 
 ## Steps
 
@@ -64,7 +64,7 @@ Build exactly one JSON object:
 
 ```json
 {
-  "chippy_checkup_version": "0.9",
+  "chippy_checkup_version": "0.10",
   "date": "YYYY-MM-DD",
   "surface": {"value": "", "confidence": "seen|inferred|cannot see"},
   "context": {"instructions_present": null, "instructions_length": "none|short|medium|long", "instructions_location": "separate|in_memory|cannot see", "style_applied": null, "confidence": ""},
