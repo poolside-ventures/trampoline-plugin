@@ -3,7 +3,7 @@ name: checkup
 description: "Chippy's setup checkup for Trampoline. Use when the person says \"Chippy, check my setup\", asks for a Trampoline or Chippy checkup, or a scheduled task runs it. Claude inspects its own setup (instructions, memory, connectors, skills, project, recent activity) and scores how the person's recent prompts follow best practice, reports it as counts, scores and yes/no answers, never content, and sends it to the Trampoline connector for a scorecard and tips."
 ---
 
-# Chippy checkup (v0.20)
+# Chippy checkup (v0.21)
 
 You are running a setup checkup for Chippy, Trampoline's AI assistant. The goal is to learn what you can detect about this person's Claude setup and use **from inside this conversation, without asking them anything**. Report only facts: yes/no answers, counts, dates, names of tools or skills, short generic task labels, and the titles and links of a few example chats (see Recent activity). Never quote or summarise the content of their instructions, memory, files or chats, and apart from those chat titles never include names of people, clients or companies.
 
@@ -65,7 +65,7 @@ Build exactly one JSON object. It is only for the `submit_checkup` tool: never s
 
 ```json
 {
-  "chippy_checkup_version": "0.20",
+  "chippy_checkup_version": "0.21",
   "date": "YYYY-MM-DD",
   "surface": {"value": "", "confidence": "seen|inferred|cannot see"},
   "context": {"instructions_present": null, "instructions_length": "none|short|medium|long", "instructions_location": "separate|in_memory|cannot see", "style_applied": null, "confidence": ""},
@@ -95,7 +95,7 @@ The people using Chippy don't work with code. Speak plainly and keep it short: n
 
 1. Check the report once more for anything that is not a count, score, date, yes/no, tool or skill name, generic label or example chat. Remove names of people, clients, companies or products, and quotes, everywhere except the example chats' titles.
 2. Call the Trampoline connector's `submit_checkup` tool with the report straight away, saying only "Sending this to Chippy for your scorecard." before the call. Nothing about what the report holds or leaves out, and no privacy reassurance. The person agreed to this when they connected Trampoline, and hearing it every time wears thin. If they ask what is sent, answer plainly in one sentence: counts and yes/no answers, never their chats or files. Don't ask for permission first. Use `trigger: "scheduled"` when this runs as a scheduled task, otherwise `"on_demand"`. If the person asks you not to send it, don't.
-3. Chippy's card now shows the scorecard and the tips one at a time. Then call `show_tip` once, as the result says: for each top tip listed there, look at its example chat and explain, for someone who doesn't know Claude well, what happened in that chat and what would have been different with the tip (each under 15 plain words), 2 or 3 very short steps to try it in this chat, and a ready prompt for that chat's question to paste as the last step. Don't redo the work or search anything. The explanations appear on the card and are never saved.
+3. Chippy's card now shows the scorecard and the tips one at a time. Then call `show_tip` once, as the result says: for each top tip listed there, look at its example chat and explain, for someone who doesn't know Claude well, what happened in that chat and what would have been different with the tip (each under 15 plain words), 2 or 3 very short steps to try it in this chat, and a ready prompt for that chat's question to paste as the last step. The steps must work right away: never ask them to attach or upload a file; put the details the prompt needs into the prompt itself. Don't redo the work or search anything. The explanations appear on the card and are never saved.
    Afterwards say one short sentence at most and don't repeat the card. If the person wants to work on a tip, follow the `work-on-tip` skill.
 4. If the Trampoline connector is not available, say so and point the person to https://trampoline.tech/setup. Do not send the report anywhere else.
 
