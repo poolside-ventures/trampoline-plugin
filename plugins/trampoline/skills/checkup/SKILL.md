@@ -3,7 +3,7 @@ name: checkup
 description: "Chippy's setup checkup for Trampoline. Use when the person says \"Chippy, check my setup\", asks for a Trampoline or Chippy checkup, or a scheduled task runs it. Claude inspects its own setup (instructions, memory, connectors, skills, project, recent activity) and scores how the person's recent prompts follow best practice, reports it as counts, scores and yes/no answers, never content, and sends it to the Trampoline connector for a scorecard and tips."
 ---
 
-# Chippy checkup (v0.23)
+# Chippy checkup (v0.24)
 
 You are running a setup checkup for Chippy, Trampoline's AI assistant. The goal is to learn what you can detect about this person's Claude setup and use **from inside this conversation, without asking them anything**. Report only facts: yes/no answers, counts, dates, names of tools or skills, short generic task labels, and the titles and links of a few example chats (see Recent activity). Never quote or summarise the content of their instructions, memory, files or chats, and apart from those chat titles never include names of people, clients or companies.
 
@@ -33,6 +33,7 @@ Do not ask the person questions, and work quietly: don't call tools that show ca
    - **Cover the full last 30 days.** Recent-chat tools return a limited number of chats per call (often 20). Call again with an earlier "before" date (the oldest chat you have so far) until you reach chats older than 30 days or there are no more. Report how many calls you made and whether you reached the 30-day mark.
    - Report: the number of chats you can see from the last 7 days and the last 30 days, the number of distinct days with activity, and the date of the oldest chat you can see.
    - **Task mix:** count chats by kind, using only these labels: writing, communication (email, messages), analysis, research, planning, coding, learning, other.
+   - Leave out chats about Chippy or Trampoline checkups: they are not the person's own work.
    - **Repeated tasks:** list kinds of task that appear in 3 or more chats in the last 30 days.
      - For each, give a short generic label of 2 to 4 words (for example "investor update", "meeting prep", "market research"), its kind from the labels above, and the count.
      - Labels must be generic: no names of people, clients, companies or products.
@@ -68,7 +69,7 @@ Build exactly one JSON object. It is only for the `submit_checkup` tool: never s
 
 ```json
 {
-  "chippy_checkup_version": "0.23",
+  "chippy_checkup_version": "0.24",
   "date": "YYYY-MM-DD",
   "surface": {"value": "", "confidence": "seen|inferred|cannot see"},
   "context": {"instructions_present": null, "instructions_length": "none|short|medium|long", "instructions_location": "separate|in_memory|cannot see", "style_applied": null, "confidence": ""},
