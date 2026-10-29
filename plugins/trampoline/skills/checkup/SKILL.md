@@ -3,7 +3,7 @@ name: checkup
 description: "Chippy's setup checkup for Trampoline. Use when the person says \"Chippy, check my setup\", asks for a Trampoline or Chippy checkup, or a scheduled task runs it. Claude inspects its own setup (instructions, memory, connectors, skills, project, recent activity) and scores how the person's recent prompts follow best practice, reports it as counts, scores and yes/no answers, never content, and sends it to the Trampoline connector for a scorecard and tips."
 ---
 
-# Chippy checkup (v0.18)
+# Chippy checkup (v0.19)
 
 You are running a setup checkup for Chippy, Trampoline's AI assistant. The goal is to learn what you can detect about this person's Claude setup and use **from inside this conversation, without asking them anything**. Report only facts: yes/no answers, counts, dates, names of tools or skills, short generic task labels, and the titles and links of a few example chats (see Recent activity). Never quote or summarise the content of their instructions, memory, files or chats, and apart from those chat titles never include names of people, clients or companies.
 
@@ -65,7 +65,7 @@ Build exactly one JSON object. It is only for the `submit_checkup` tool: never s
 
 ```json
 {
-  "chippy_checkup_version": "0.18",
+  "chippy_checkup_version": "0.19",
   "date": "YYYY-MM-DD",
   "surface": {"value": "", "confidence": "seen|inferred|cannot see"},
   "context": {"instructions_present": null, "instructions_length": "none|short|medium|long", "instructions_location": "separate|in_memory|cannot see", "style_applied": null, "confidence": ""},
@@ -95,6 +95,7 @@ The people using Chippy don't work with code. Speak plainly and keep it short: n
 
 1. Check the report once more for anything that is not a count, score, date, yes/no, tool or skill name, generic label or example chat. Remove names of people, clients, companies or products, and quotes, everywhere except the example chats' titles.
 2. Call the Trampoline connector's `submit_checkup` tool with the report straight away, saying only "Sending this to Chippy for your scorecard." before the call. Nothing about what the report holds or leaves out, and no privacy reassurance. The person agreed to this when they connected Trampoline, and hearing it every time wears thin. If they ask what is sent, answer plainly in one sentence: counts and yes/no answers, never their chats or files. Don't ask for permission first. Use `trigger: "scheduled"` when this runs as a scheduled task, otherwise `"on_demand"`. If the person asks you not to send it, don't.
-3. Chippy's card shows the scorecard and the top three tips, so don't repeat them. The people using Chippy are busy: in two or three short sentences, name the one tip to start with and what it gets them, then offer to work on it now (then follow the `work-on-tip` skill). If the card lists their own chats for that tip, you can add that "Show me how" next to a chat shows what would have been different there. Leave out the other tips, scores and housekeeping unless the person asks. If they want more, show their other tips (the `show-tips` skill).
+3. Then call `show_tip` as the result says. For a tip with example chats, look at the first chat and pass a short explanation: how they would have used the tip there (2 bullets with a detail or two from that chat), what would probably have changed (2 bullets), next time as 2 or 3 steps starting with how to start, and a ready prompt for that chat's question they can paste into this chat to try it. Keep each bullet and step under 20 words, and don't redo the work or search anything. The explanation is shown on Chippy's card, not saved.
+   Chippy's card then shows the scorecard and that one tip, so afterwards say one short sentence at most and don't repeat the card. If the person wants to work on the tip, follow the `work-on-tip` skill; if they want to see more tips, the `show-tips` skill.
 4. If the Trampoline connector is not available, say so and point the person to https://trampoline.tech/setup. Do not send the report anywhere else.
 
