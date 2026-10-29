@@ -3,7 +3,7 @@ name: checkup
 description: "Chippy's setup checkup for Trampoline. Use when the person says \"Chippy, check my setup\", asks for a Trampoline or Chippy checkup, or a scheduled task runs it. Claude inspects its own setup (instructions, memory, connectors, skills, project, recent activity) and scores how the person's recent prompts follow best practice, reports it as counts, scores and yes/no answers, never content, and sends it to the Trampoline connector for a scorecard and tips."
 ---
 
-# Chippy checkup (v0.16)
+# Chippy checkup (v0.17)
 
 You are running a setup checkup for Chippy, Trampoline's AI assistant. The goal is to learn what you can detect about this person's Claude setup and use **from inside this conversation, without asking them anything**. Report only facts: yes/no answers, counts, dates, names of tools or skills, and short generic task labels. Never quote or summarise the content of their instructions, memory, files or chats, and never include names of people, clients or companies.
 
@@ -47,7 +47,7 @@ Do not ask the person questions, and work quietly: don't call tools that show ca
      - **strong:** the task needs data or an action in that service, and the description or tool names show the connector provides it (for example trademark searches for naming work).
      - **possible:** the connector could help with part of the task.
      - **weak:** only the topic overlaps (for example a calendar connector for planning event formats). List weak matches only if there is nothing better, and never more than one.
-   - Give the reason in 15 words or fewer, taken from the description or tool names.
+   - Give the reason as what the connector does for the person, in 8 words or fewer (it becomes the tip's one-line title), taken from the description or tool names.
    - Do not call any connector's own tools.
 10. **Prompt practices.** How the person asks, scored against Trampoline's best practices. Only scores are sent, never the prompts.
    - If past-chat search is switched off or not offered, skip this step and set `reason_if_none` to `past_chat_search_off`. That is a setup gap: the scorecard will say so.
@@ -64,7 +64,7 @@ Build exactly one JSON object. It is only for the `submit_checkup` tool: never s
 
 ```json
 {
-  "chippy_checkup_version": "0.16",
+  "chippy_checkup_version": "0.17",
   "date": "YYYY-MM-DD",
   "surface": {"value": "", "confidence": "seen|inferred|cannot see"},
   "context": {"instructions_present": null, "instructions_length": "none|short|medium|long", "instructions_location": "separate|in_memory|cannot see", "style_applied": null, "confidence": ""},
