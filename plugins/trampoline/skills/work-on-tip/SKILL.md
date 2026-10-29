@@ -1,6 +1,6 @@
 ---
 name: work-on-tip
-description: "Work through the person's active Trampoline tip with them, following its playbook. Use when they say \"Chippy, let's work on my tip\", choose \"Work on this\" on Chippy's card, or activated a tip on the Trampoline website and want to do it now."
+description: "Work through the person's active Trampoline tip with them, following its playbook. Use when they say \"Chippy, let's work on my tip\", ask to work on one of their tips, or activated a tip on the Trampoline website and want to do it now."
 ---
 
 # Work on my tip
