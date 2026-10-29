@@ -36,7 +36,7 @@ Do not ask the person questions, and work quietly: don't call tools that show ca
    - **Repeated tasks:** list kinds of task that appear in 3 or more chats in the last 30 days.
      - For each, give a short generic label of 2 to 4 words (for example "investor update", "meeting prep", "market research"), its kind from the labels above, and the count.
      - Labels must be generic: no names of people, clients, companies or products.
-     - Give up to two **example chats** that show the task best, most recent first: the chat's title exactly as shown, its link (`https://claude.ai/chat/...`) and its date. Chippy shows the person these chats with each tip, so they can see how the tip would have changed that work. Leave them out if your past-chat tool shows no links.
+     - Give up to two **example chats** that clearly are this task (leave them out rather than pick one that isn't), most recent first: the chat's title exactly as shown, its link (`https://claude.ai/chat/...`) and its date. Chippy shows the person these chats with each tip, so they can see how the tip would have changed that work. Leave them out if your past-chat tool shows no links.
    - **Features used:** count chats where you can see that a feature was used (research mode, documents or artifacts, file analysis or code, web search). If the chat summaries don't show this, write "cannot see" instead of 0.
    - **Connectors used:** list the connectors you can see were used in recent chats, or "cannot see".
    - Apart from the example chats, do not quote titles or content.
