@@ -1,6 +1,6 @@
 {
   "name": "trampoline",
-  "version": "0.3.23",
+  "version": "0.3.24",
   "description": "Chippy, Trampoline's AI assistant, checks how your Claude is set up, finds the real gaps, and fixes them with you. Say \"Chippy, check my setup\".",
   "author": {
     "name": "Poolside Ventures S.L.",
