@@ -3,7 +3,7 @@ name: checkup
 description: "Chippy's setup checkup for Trampoline. Use when the person says \"Chippy, check my setup\", asks for a Trampoline or Chippy checkup, or a scheduled task runs it. Claude looks at its own setup and recent work, scores how the person's recent prompts follow best practice, and sends counts, scores, yes/no answers and a few example chats to the Trampoline connector for a scorecard and tips."
 ---
 
-# Chippy checkup (v0.30)
+# Chippy checkup (v0.31)
 
 You are running a setup checkup for Chippy, Trampoline's AI assistant. The goal is to learn what you can detect about this person's Claude setup and use **from inside this conversation, without asking them anything**. Report only facts: yes/no answers, counts, dates, names of tools or skills, short generic task labels, and the titles and links of a few example chats (see Recent activity). Never quote or summarise the content of their instructions, memory, files or chats, and apart from those chat titles never include names of people, clients or companies.
 
@@ -45,12 +45,17 @@ Work briskly: the person is waiting for their card. Only collect what the steps 
      - **weak:** only the topic overlaps (for example a calendar connector for planning event formats). List weak matches only if there is nothing better, and never more than one.
    - Give the reason as what the connector does for the person, in 8 words or fewer (it becomes the tip's one-line title), taken from the description or tool names.
    - Do not call any connector's own tools.
-9. **Prompt practices.** How the person asks, scored against Trampoline's best practices. Only scores are sent, never the prompts.
+9. **Prompt practices.** How the person asks, scored against Trampoline's best practices on the first message of every chat from the last week. Only scores are sent, never the prompts.
    - If past-chat search is switched off or not offered, skip this step and set `reason_if_none` to `past_chat_search_off`. That is a setup gap: the scorecard will say so.
    - Call the Trampoline connector's `get_prompt_practices` tool for the current practices, scale and how to assess. If the connector is not available, skip this step (`reason_if_none`: `other`).
-   - With the past-chat tool, look at chats from the last 7 days. Pick up to 6 of the person's own messages that ask Claude to do something, from different chats where you can: opening requests, and follow-ups that react to an answer. Skip greetings, one-word replies, bare slash commands (for example `/chippy-checkup`), chats about Chippy or Trampoline themselves, and text Claude drafted for them.
-   - If the results show only summaries or titles and not the person's own words, don't guess: set `reason_if_none` to `only_summaries_visible`.
-   - Score each message on every practice: 0, 1, 2, or null when it does not apply, using the level descriptions. Decide each score quickly; no need to write out reasons. A short prompt can score 2; length is not quality.
+   - **Every chat, no picking.** Take every chat from the last 7 days in the list from step 7, leaving out chats about Chippy, Trampoline or setup checks. If there are more than 40, take the 40 most recent.
+   - **Get the person's first message in full** for each of them:
+     - from the recent-chats result, when it starts at the top of the chat;
+     - otherwise, search past chats for the chat's title and use a result that starts at the top of that chat;
+     - otherwise, open the chat.
+     If you still can't see the first message, skip that chat; never score from a summary.
+   - Score each first message on every practice: 0, 1, 2, or null when it does not apply, using the level descriptions. Decide each score quickly; no need to write out reasons. A short prompt can score 2; length is not quality.
+   - Set `chats_looked_at` to the number of chats you tried. If you couldn't see any first message, set `reason_if_none` to `only_summaries_visible`.
    - In the report, give each scored message its date, task kind (same labels as above), the scores, and the chat it came from: its title and link, copied exactly. Nothing else: no text or topics.
 
 ## The report
@@ -59,7 +64,7 @@ Build exactly one JSON object. It is only for the `submit_checkup` tool: never s
 
 ```json
 {
-  "chippy_checkup_version": "0.30",
+  "chippy_checkup_version": "0.31",
   "date": "YYYY-MM-DD",
   "context": {"instructions_present": null, "instructions_length": "none|short|medium|long"},
   "memory": {"present": null, "latest_item_date": null},
