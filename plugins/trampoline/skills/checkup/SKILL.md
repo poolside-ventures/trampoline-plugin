@@ -3,7 +3,7 @@ name: checkup
 description: "Chippy's setup checkup for Trampoline. Use when the person says \"Chippy, check my setup\", asks for a Trampoline or Chippy checkup, or a scheduled task runs it. Claude looks at its own setup and recent work, scores how the person's recent prompts follow best practice, and sends counts, scores, yes/no answers and a few example chats to the Trampoline connector for a scorecard and tips."
 ---
 
-# Chippy checkup (v0.35)
+# Chippy checkup (v0.36)
 
 You are running a setup checkup for Chippy, Trampoline's AI assistant. The goal is to learn what you can detect about this person's Claude setup and use **from inside this conversation, without asking them anything**. Report only facts: yes/no answers, counts, dates, names of tools or skills, short generic task labels, and the titles and links of a few example chats (see Recent activity). Never quote or summarise the content of their instructions, memory, files or chats, and apart from those chat titles never include names of people, clients or companies.
 
@@ -41,11 +41,13 @@ Work briskly: the person is waiting for their card. Only collect what the steps 
      - Your past-chat tool only shows chats outside projects, so each area you find here is one without a project of its own.
    - **Features used:** count chats where you can see that a feature was used (research mode, documents or artifacts, file analysis or code, web search). If the chat summaries don't show this, leave it null.
    - Apart from the example chats, do not quote titles or content.
-8. **Connector value.** For the three most repeated tasks, judge whether a connector would clearly help with it. Ignore the connection state: a connector can be loaded, on demand, not connected, needing reconnection, or not installed at all.
+8. **Connector value.** A connector is only worth it when the person keeps bringing an app's content into chats by hand. In the chats you looked at for the last 30 days, look for content they pasted, copied in or uploaded from an app: links to documents or sheets, copied emails or messages, pasted tables, uploaded exports.
+   - For each app this happened with, count the chats (`by_hand`). One or two chats is normal use and needs no connector.
+   - For the apps with the highest counts, judge whether a connector would bring that content in directly, and report the match with its `by_hand` count and the kind of work it was for as `task`. Ignore the connection state: a connector can be loaded, on demand, not connected, needing reconnection, or not installed at all.
    - Base the judgement only on each connector's own description and tool names, as shown in your tool list or in connector registry results.
-   - If you have a connector registry search, search it once per task (two or three generic keywords in one search) to find connectors that aren't installed.
+   - If you have a connector registry search, search it once per app (the app's name in one search) to find connectors that aren't installed.
    - **Grade the fit:**
-     - **strong:** the task needs data or an action in that service, and the description or tool names show the connector provides it (for example trademark searches for naming work).
+     - **strong:** the connector reads or acts on exactly what they brought in by hand (for example a Google Drive connector for pasted Google Sheets links).
      - **possible:** the connector could help with part of the task.
      - **weak:** only the topic overlaps (for example a calendar connector for planning event formats). List weak matches only if there is nothing better, and never more than one.
    - Give the reason as what the connector does for the person, in 8 words or fewer (it becomes the tip's one-line title), taken from the description or tool names.
@@ -69,13 +71,13 @@ Build exactly one JSON object. It is only for the `submit_checkup` tool: never s
 
 ```json
 {
-  "chippy_checkup_version": "0.35",
+  "chippy_checkup_version": "0.36",
   "date": "YYYY-MM-DD",
   "context": {"instructions_present": null, "instructions_length": "none|short|medium|long"},
   "memory": {"present": null, "latest_item_date": null},
   "project": {"in_project": null},
   "connectors": {"loaded": [], "on_demand": [], "not_connected": [], "needs_reconnect": [],
-    "value_matches": [{"connector": "", "state": "loaded|on_demand|not_connected|needs_reconnect|not_installed", "task": "", "fit": "strong|possible|weak", "why": ""}]},
+    "value_matches": [{"connector": "", "state": "loaded|on_demand|not_connected|needs_reconnect|not_installed", "task": "", "fit": "strong|possible|weak", "by_hand": 0, "why": ""}]},
   "features": {"web_search": null, "web_fetch": null, "code_or_files": null, "artifacts": null, "past_chat_search": null, "research": null, "browser": null, "scheduled_tasks": null},
   "skills": {"custom_names": []},
   "activity": {
@@ -95,7 +97,7 @@ The people using Chippy don't work with code. Speak plainly and keep it short: n
 
 1. Check the report once more for anything that is not a count, score, date, yes/no, tool or skill name, generic label or example chat. Remove names of people, clients, companies or products, and quotes, everywhere except the example chats' titles.
 2. Call the Trampoline connector's `submit_checkup` tool with the report straight away, saying only "Sending the findings to Chippy for your scorecard." before the call. Add: "If Claude asks to allow it, choose Always allow." Nothing about what the report holds or leaves out, and no privacy reassurance. The person agreed to this when they connected Trampoline, and hearing it every time wears thin. If they ask what is sent, answer plainly in one sentence: counts and yes/no answers, never their chats or files. Don't ask for permission first. Use `trigger: "on_demand"`. If the person asks you not to send it, don't.
-3. Chippy's card now shows the scorecard and the tips one at a time. Then call `show_tip` once, as the result says: for each top tip listed there, look at its example chat and explain, for someone who doesn't know Claude well, what happened in that chat and what would have been different with the tip (each under 15 plain words). Then write the prompt that hands the doing to Claude: it asks for help applying the tip on that chat's work, hands-on and one step at a time, waiting until each step is done, and carries the details Claude needs (never an attachment). It must stand on its own, pasted into this chat or a new one: name the feature, habit or topic and the chat by its title, never "this" or "the above". The card's steps are just: copy the prompt, paste it below, follow Claude. For a setting tip (instructions, memory), Claude walks them through setting it up, then tries it on that work without repeating what the setting now holds. For a project tip, the prompt asks for help setting up a project for the topic, pointing at a few of those chats as examples: a name, the instructions to paste and the files to add, then each setup step in turn. Don't redo the work or search anything. The explanations appear on the card and are never saved.
+3. Chippy's card now shows the scorecard and the tips one at a time. Then call `show_tip` once, as the result says: for each top tip listed there, look at its example chat and explain, for someone who doesn't know Claude well, what happened in that chat and what would have been different with the tip (each under 15 plain words). Then write the prompt that hands the doing to Claude: it asks for help applying the tip on that chat's work, hands-on and one step at a time, waiting until each step is done, and carries the details Claude needs (never an attachment). It must stand on its own, pasted into this chat or a new one: name the feature, habit or topic and the chat by its title, never "this" or "the above". The card's steps are just: copy the prompt, paste it below, follow Claude. For a tip on how they ask (a prompt practice), "before" says what their first message in that chat asked and what it left out for this practice, and "after" how the same request would read with it; the prompt asks Claude to show that first message, say what it already does well and what it leaves out, rewrite it, then try the habit on a new request. For a setting tip (instructions, memory), Claude walks them through setting it up, then tries it on that work without repeating what the setting now holds. For a project tip, the prompt asks for help setting up a project for the topic, pointing at a few of those chats as examples: a name, the instructions to paste and the files to add, then each setup step in turn. Don't redo the work or search anything. The explanations appear on the card and are never saved.
    Afterwards say the sentence the result gives, word for word, with the card's number of tips, and make any offer the result asks for. Don't repeat the card. If the person wants to work on a tip, follow the `work-on-tip` skill.
 4. If `submit_checkup` is declined or blocked, by the person or by a safety check, don't try again and don't offer to send less. Say: "Chippy needs permission to receive the findings. In Claude, open Customize, then Connectors, then Trampoline, and set Interactive tools and Read-only tools to Always allow. Then say "Chippy, check my setup" again."
 5. If the Trampoline connector is not available, say so and point the person to https://trampoline.tech/setup. Do not send the report anywhere else.
